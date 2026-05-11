@@ -1,7 +1,7 @@
 {
   "name": "waypoint-challenge-mcp",
   "version": "1.0.0",
-  "description": "MCP server for Waypoint Learning Special Education Challenge — lesson + IEP differentiation context",
+  "description": "MCP server for Waypoint Learning Special Education Challenge \u2014 lesson + IEP differentiation context",
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
@@ -23,6 +23,8 @@
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^3.3.2",
     "zod": "^4.4.3"
   },
   "devDependencies": {
