@@ -1,0 +1,259 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=DM+Sans:wght@400;500&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.65;color:var(--color-text-primary);background:transparent}
+  .page{max-width:680px;margin:0 auto;padding:1.5rem 0}
+  .banner{background:var(--color-background-secondary);border-left:4px solid #1D9E75;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:0.85rem 1.1rem;margin-bottom:1.5rem}
+  .banner-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:#0F6E56;margin-bottom:2px}
+  .banner h1{font-family:'Lora',serif;font-size:18px;font-weight:600;color:var(--color-text-primary);margin-bottom:3px}
+  .banner p{font-size:13px;color:var(--color-text-secondary)}
+  .section-label{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-secondary);margin:1.5rem 0 0.5rem;padding-bottom:4px;border-bottom:0.5px solid var(--color-border-tertiary)}
+  .card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:0.75rem}
+  .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem}
+  .iep-chip{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:#E1F5EE;color:#0F6E56;margin-right:4px;margin-bottom:4px}
+  .need-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:0.6rem}
+  .need-icon{width:22px;height:22px;border-radius:50%;background:#E1F5EE;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+  .need-icon i{font-size:12px;color:#0F6E56}
+  .need-text{font-size:14px;color:var(--color-text-primary)}
+  .need-text strong{font-weight:500}
+  h2{font-family:'Lora',serif;font-size:17px;font-weight:600;color:var(--color-text-primary);margin-bottom:0.5rem}
+  h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:0.35rem}
+  p{font-size:14px;color:var(--color-text-secondary);margin-bottom:0}
+  .strategy-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:0.75rem}
+  .strategy-card .sc-header{display:flex;align-items:center;gap:10px;margin-bottom:0.6rem}
+  .sc-icon{width:32px;height:32px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .sc-icon.teal{background:#E1F5EE} .sc-icon.teal i{color:#0F6E56}
+  .sc-icon.purple{background:#EEEDFE} .sc-icon.purple i{color:#534AB7}
+  .sc-icon.amber{background:#FAEEDA} .sc-icon.amber i{color:#854F0B}
+  .sc-icon.coral{background:#FAECE7} .sc-icon.coral i{color:#993C1D}
+  .sc-icon i{font-size:16px}
+  .sc-title{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+  .sc-rationale{font-size:12px;color:var(--color-text-secondary);font-style:italic;margin-bottom:0.5rem}
+  .tag-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:0.5rem}
+  .tag{font-size:11px;padding:2px 8px;border-radius:20px;border:0.5px solid var(--color-border-secondary);color:var(--color-text-secondary)}
+  .student-copy{background:var(--color-background-primary);border:1.5px solid #1D9E75;border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem;margin-bottom:0.75rem}
+  .sc-badge{font-size:11px;font-weight:500;background:#E1F5EE;color:#085041;padding:2px 8px;border-radius:20px;margin-bottom:0.75rem;display:inline-block}
+  .student-copy h3{font-size:15px;font-weight:500;margin-bottom:0.4rem}
+  .student-copy p{font-size:14px;margin-bottom:0.6rem}
+  .write-box{border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:0.7rem;min-height:56px;background:var(--color-background-secondary);font-size:14px;color:var(--color-text-tertiary);font-style:italic}
+  .choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0.5rem 0}
+  .choice-btn{border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:0.6rem 0.9rem;font-size:13px;text-align:left;background:var(--color-background-secondary);color:var(--color-text-primary);cursor:pointer;transition:background 0.15s}
+  .choice-btn:hover{background:var(--color-background-tertiary)}
+  .vocab-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:0.5rem}
+  .vocab-table th{font-weight:500;padding:6px 10px;border-bottom:0.5px solid var(--color-border-secondary);text-align:left;color:var(--color-text-secondary);font-size:11px;text-transform:uppercase;letter-spacing:0.05em}
+  .vocab-table td{padding:6px 10px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top}
+  .vocab-table tr:last-child td{border-bottom:none}
+  .checklist li{font-size:14px;color:var(--color-text-primary);margin-bottom:6px;list-style:none;display:flex;align-items:flex-start;gap:8px}
+  .checklist li::before{content:"☐";font-size:16px;line-height:1.3;flex-shrink:0;color:#1D9E75}
+  .annotation-guide{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:0.5rem}
+  .ann-step{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:0.65rem 0.8rem;font-size:13px}
+  .ann-step .step-num{font-size:11px;font-weight:500;color:#0F6E56;margin-bottom:2px}
+  .ann-step .step-text{color:var(--color-text-primary)}
+  .praise-box{background:#FAEEDA;border-radius:var(--border-radius-md);padding:0.75rem 1rem;margin-top:0.75rem}
+  .praise-box p{font-size:13px;color:#633806}
+  .praise-box strong{font-weight:500}
+  .divider{height:0.5px;background:var(--color-border-tertiary);margin:1rem 0}
+</style>
+
+<div class="page">
+  <h2 class="sr-only" style="position:absolute;left:-9999px">Differentiated lesson plan for Jasmine Bailey — What is Community and Why is it Important</h2>
+
+  <div class="banner">
+    <div class="banner-label">Differentiated lesson — IEP student</div>
+    <h1>"What Is 'Community' and Why Is It Important?" — Toby Lowe</h1>
+    <p>Jasmine Regina Bailey &nbsp;·&nbsp; Grade 7, ELA &nbsp;·&nbsp; Riverstone Prep &nbsp;·&nbsp; Unit 1: Community and Belonging</p>
+  </div>
+
+  <div class="section-label">IEP snapshot — key needs driving differentiation</div>
+  <div class="card">
+    <div style="margin-bottom:0.75rem">
+      <span class="iep-chip">Reading: Grade 3 level</span>
+      <span class="iep-chip">Informational Text: Grade 2</span>
+      <span class="iep-chip">Vocabulary: Grade 3</span>
+      <span class="iep-chip">ELA grade: 1.8</span>
+    </div>
+    <div class="need-row"><div class="need-icon"><i class="ti ti-focus" aria-hidden="true"></i></div><div class="need-text"><strong>Attention &amp; stamina</strong> — disability affects focus, task initiation, and stamina; shows avoidance (head down, restroom requests) when frustrated</div></div>
+    <div class="need-row"><div class="need-icon"><i class="ti ti-highlight" aria-hidden="true"></i></div><div class="need-text"><strong>Comprehension strategies</strong> — needs frequent reminders to annotate, re-read, and track text independently</div></div>
+    <div class="need-row"><div class="need-icon"><i class="ti ti-writing" aria-hidden="true"></i></div><div class="need-text"><strong>Writing</strong> — working toward claim + evidence + analysis paragraphs; currently at 0–50% accuracy independently</div></div>
+    <div class="need-row"><div class="need-icon"><i class="ti ti-users" aria-hidden="true"></i></div><div class="need-text"><strong>Social strengths</strong> — warm, peer-motivated, thrives in 1:1 and small group; responds to specific positive praise</div></div>
+    <div class="need-row"><div class="need-icon"><i class="ti ti-layout-list" aria-hidden="true"></i></div><div class="need-text"><strong>Organizational tools</strong> — graphic organizers and checklists noticeably improve accuracy and independence</div></div>
+  </div>
+
+  <div class="section-label">Differentiation strategies for this lesson</div>
+
+  <div class="strategy-card">
+    <div class="sc-header"><div class="sc-icon teal"><i class="ti ti-book-2" aria-hidden="true"></i></div><div class="sc-title">Before reading — vocabulary preview</div></div>
+    <div class="sc-rationale">Vocabulary at Grade 3; pre-teaching key words lowers the cognitive load so Jasmine can focus on meaning, not decoding.</div>
+    <p style="font-size:14px;color:var(--color-text-primary);margin-bottom:0.5rem">Before whole-class reading begins, pull Jasmine (or a small group) for a 3-minute vocabulary walk. Show the word, say it together, give a student-friendly definition, and have her draw or write one quick example.</p>
+    <div class="tag-row">
+      <span class="tag">IEP: repeat directions</span>
+      <span class="tag">IEP: reference sheets</span>
+      <span class="tag">IEP: small group</span>
+    </div>
+  </div>
+
+  <div class="strategy-card">
+    <div class="sc-header"><div class="sc-icon purple"><i class="ti ti-pencil" aria-hidden="true"></i></div><div class="sc-title">During reading — chunked annotation with a sentence stem</div></div>
+    <div class="sc-rationale">Jasmine often does not annotate independently; breaking text into short chunks with a single focus per chunk builds the habit without overwhelming stamina.</div>
+    <p style="font-size:14px;color:var(--color-text-primary);margin-bottom:0.5rem">Give Jasmine the 4-step annotation guide (in the student copy below). After each paragraph chunk, check in briefly: "What did you write? Does it match the question?" This is the IEP-mandated 1:1 check-in built into instruction.</p>
+    <div class="tag-row">
+      <span class="tag">IEP: reminders to pause, plan, proceed</span>
+      <span class="tag">IEP: 1:1 check-ins</span>
+      <span class="tag">ELA goal: annotate accurately for prompt</span>
+    </div>
+  </div>
+
+  <div class="strategy-card">
+    <div class="sc-header"><div class="sc-icon amber"><i class="ti ti-layout-columns" aria-hidden="true"></i></div><div class="sc-title">During reading questions — graphic organizer scaffold</div></div>
+    <div class="sc-rationale">Jasmine is beginning to see the value of graphic organizers; pairing the during-reading questions with an organizer turns open-ended writing into a fill-in process she can manage.</div>
+    <p style="font-size:14px;color:var(--color-text-primary);margin-bottom:0.5rem">Use the "T-chart" scaffold below for Question C (Turn &amp; Talk / list 3 traits of community). Jasmine records one trait per row in her own words — this also primes her for the short-answer at the end.</p>
+    <div class="tag-row">
+      <span class="tag">IEP: graphic organizers and checklists</span>
+      <span class="tag">IEP: copy of teacher notes</span>
+      <span class="tag">ELA goal: answer literal questions about text</span>
+    </div>
+  </div>
+
+  <div class="strategy-card">
+    <div class="sc-header"><div class="sc-icon coral"><i class="ti ti-heart" aria-hidden="true"></i></div><div class="sc-title">Independent practice — choice + self-checklist</div></div>
+    <div class="sc-rationale">Peer motivation and class jobs are Jasmine's strengths; offering structured choice reduces avoidance and increases ownership. The self-checklist mirrors her IEP goal of independently using supports.</div>
+    <p style="font-size:14px;color:var(--color-text-primary);margin-bottom:0.5rem">Allow Jasmine to respond to the short-answer question using one of two formats: (A) written paragraph with graphic organizer, or (B) oral response recorded by teacher/aide with Jasmine later copying her own words. Either path requires claim + one piece of evidence + one sentence of analysis — the current short-term benchmark.</p>
+    <div class="tag-row">
+      <span class="tag">IEP: extra time</span>
+      <span class="tag">IEP: scheduled breaks</span>
+      <span class="tag">IEP: multimodal student output</span>
+      <span class="tag">ELA goal: write a claim that answers the question</span>
+    </div>
+  </div>
+
+  <div class="strategy-card">
+    <div class="sc-header"><div class="sc-icon teal"><i class="ti ti-message-circle" aria-hidden="true"></i></div><div class="sc-title">Student-led discussion — peer leverage</div></div>
+    <div class="sc-rationale">Jasmine is warm, peer-motivated, and loves to help others — discussion is a natural strength and a low-stakes confidence builder.</div>
+    <p style="font-size:14px;color:var(--color-text-primary);margin-bottom:0.5rem">Strategically pair Jasmine with a patient, verbal partner. Assign her Question 1 (courteous behavior in a community you belong to) — the most personal and concrete prompt — so she can draw on lived experience rather than text recall alone.</p>
+    <div class="tag-row">
+      <span class="tag">IEP: small group (as needed)</span>
+      <span class="tag">IEP: reminder to remain engaged</span>
+    </div>
+  </div>
+
+  <div class="section-label">Regulation &amp; engagement check-ins (embedded in lesson)</div>
+  <div class="card-grid">
+    <div class="card">
+      <h3><i class="ti ti-clock" style="font-size:14px;margin-right:5px;color:#0F6E56" aria-hidden="true"></i>Scheduled breaks</h3>
+      <p>After During-Reading Questions and before Independent Practice (~20 min mark). Offer a movement break (stand, stretch, switch seats) — aligns with IEP counseling goal of using calming strategies.</p>
+    </div>
+    <div class="card">
+      <h3><i class="ti ti-star" style="font-size:14px;margin-right:5px;color:#854F0B" aria-hidden="true"></i>Specific positive praise</h3>
+      <p>Name exactly what Jasmine did: "I noticed you re-read paragraph 5 before answering — that's exactly what strong readers do." Avoid general praise. Frequency: at least twice per lesson.</p>
+    </div>
+    <div class="card">
+      <h3><i class="ti ti-alert-triangle" style="font-size:14px;margin-right:5px;color:#993C1D" aria-hidden="true"></i>Watch for shutdown signals</h3>
+      <p>Head down, repeated restroom requests, silence after engagement. Prompt quietly: "Pause, plan, proceed — what's one thing you can try right now?" Do not wait for full disengagement.</p>
+    </div>
+    <div class="card">
+      <h3><i class="ti ti-front-door" style="font-size:14px;margin-right:5px;color:#534AB7" aria-hidden="true"></i>Small group option</h3>
+      <p>Per IEP (Jasmine chooses small group 80% of the time when offered). Have the SE teacher or inclusion aide positioned nearby during independent practice to facilitate a small group pull if needed.</p>
+    </div>
+  </div>
+
+  <div class="section-label">Student copy — scaffolded materials for Jasmine</div>
+
+  <div class="student-copy">
+    <div class="sc-badge">Vocabulary — before we read</div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:0.6rem">Say each word out loud. Write what it means in your own words.</p>
+    <table class="vocab-table">
+      <thead><tr><th>Word</th><th>Sounds like</th><th>Simple meaning</th><th>My example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Community</strong></td><td>kuh-MYOO-nuh-tee</td><td>a group of people who share something important</td><td class="write-box" style="min-height:28px"> </td></tr>
+        <tr><td><strong>Narrative</strong></td><td>NAIR-uh-tiv</td><td>a story that explains who we are</td><td class="write-box" style="min-height:28px"> </td></tr>
+        <tr><td><strong>Identity</strong></td><td>eye-DEN-tuh-tee</td><td>the things that make you YOU</td><td class="write-box" style="min-height:28px"> </td></tr>
+        <tr><td><strong>Normative</strong></td><td>NOR-muh-tiv</td><td>related to rules about what's right or good</td><td class="write-box" style="min-height:28px"> </td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="student-copy">
+    <div class="sc-badge">Annotation guide — use this as you read</div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:0.6rem">After each section, pick ONE box to fill in.</p>
+    <div class="annotation-guide">
+      <div class="ann-step"><div class="step-num">Step 1 · Paragraphs 1–2</div><div class="step-text">Circle ONE word Lowe uses to describe "community." Write: <em>This word shows…</em></div></div>
+      <div class="ann-step"><div class="step-num">Step 2 · Paragraphs 3–4</div><div class="step-text">Underline Lowe's definition. Write it in your own words below it.</div></div>
+      <div class="ann-step"><div class="step-num">Step 3 · Paragraphs 5–7</div><div class="step-text">Put a ★ next to ONE thing Lowe does because he is part of the Newcastle community.</div></div>
+      <div class="ann-step"><div class="step-num">Step 4 · Paragraph 8</div><div class="step-text">Number the bullets 1–3. Write: <em>These bullets help the reader because…</em></div></div>
+    </div>
+  </div>
+
+  <div class="student-copy">
+    <div class="sc-badge">During-reading organizer — 3 traits of a community</div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:0.6rem">Find three traits of a community from the bulleted list in paragraph 2. Write each one in your own words.</p>
+    <div style="margin-top:0.5rem">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <span style="font-size:13px;font-weight:500;min-width:50px;color:var(--color-text-secondary)">Trait 1</span>
+        <div class="write-box" style="flex:1;min-height:40px"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <span style="font-size:13px;font-weight:500;min-width:50px;color:var(--color-text-secondary)">Trait 2</span>
+        <div class="write-box" style="flex:1;min-height:40px"></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:13px;font-weight:500;min-width:50px;color:var(--color-text-secondary)">Trait 3</span>
+        <div class="write-box" style="flex:1;min-height:40px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="student-copy">
+    <div class="sc-badge">Short-answer writing scaffold</div>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:0.5rem"><strong>Prompt:</strong> How does Toby Lowe's example of Newcastle support his definition of community?</p>
+    <div class="divider"></div>
+    <h3 style="margin-bottom:0.3rem">Step 1 — My claim (answer the question)</h3>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:4px">Starter: <em>Lowe's example of Newcastle shows that his definition is true because…</em></p>
+    <div class="write-box" style="min-height:52px;margin-bottom:0.75rem"></div>
+    <h3 style="margin-bottom:0.3rem">Step 2 — My evidence (from the text)</h3>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:4px">Starter: <em>For example, in paragraph ___, Lowe says that…</em></p>
+    <div class="write-box" style="min-height:52px;margin-bottom:0.75rem"></div>
+    <h3 style="margin-bottom:0.3rem">Step 3 — My analysis (so what?)</h3>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:4px">Starter: <em>This shows that his definition works because…</em></p>
+    <div class="write-box" style="min-height:52px;margin-bottom:0.75rem"></div>
+    <div class="divider"></div>
+    <h3 style="margin-bottom:0.4rem">Self-checklist</h3>
+    <ul class="checklist">
+      <li>I answered the question (I have a claim)</li>
+      <li>I used at least one example from the text with a paragraph number</li>
+      <li>I explained WHY my evidence proves my point</li>
+      <li>I used at least one vocabulary word from today</li>
+    </ul>
+    <div class="praise-box"><p><strong>Try it!</strong> Oral option: tell your teacher or aide your answer out loud first, then write it in your own words. Both count.</p></div>
+  </div>
+
+  <div class="student-copy">
+    <div class="sc-badge">Student-led discussion — your question</div>
+    <p style="font-size:13px;margin-bottom:0.5rem"><strong>Question 1:</strong> Think of a community you belong to. What is one behavior that is considered courteous (polite, expected) in that community?</p>
+    <p style="font-size:13px;color:var(--color-text-secondary);margin-bottom:0.5rem">Ideas: family, neighborhood, school, sports team, religious group, friend group…</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0.5rem">
+      <div>
+        <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:5px">My answer</p>
+        <div class="write-box" style="min-height:70px"></div>
+      </div>
+      <div>
+        <p style="font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:5px">My partner's answer</p>
+        <div class="write-box" style="min-height:70px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">IEP goal alignment — this lesson</div>
+  <div class="card">
+    <table style="width:100%;font-size:13px;border-collapse:collapse">
+      <thead><tr><th style="text-align:left;padding:5px 8px;color:var(--color-text-secondary);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:0.5px solid var(--color-border-secondary)">IEP goal</th><th style="text-align:left;padding:5px 8px;color:var(--color-text-secondary);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;border-bottom:0.5px solid var(--color-border-secondary)">How this lesson addresses it</th></tr></thead>
+      <tbody>
+        <tr><td style="padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top">ELA: annotate accurately for prompt</td><td style="padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);vertical-align:top">4-step annotation guide with one focus per chunk</td></tr>
+        <tr><td style="padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top">ELA: answer literal comprehension questions</td><td style="padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);vertical-align:top">T-chart organizer for during-reading questions; multiple choice with teacher copy available for checking</td></tr>
+        <tr><td style="padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top">ELA: write a claim that answers the question</td><td style="padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);vertical-align:top">3-step scaffold with sentence starters; oral option accepted</td></tr>
+        <tr><td style="padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top">ELA: find textual evidence</td><td style="padding:7px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);vertical-align:top">Evidence step in writing scaffold; paragraph number prompts for locating text</td></tr>
+        <tr><td style="padding:7px 8px;color:var(--color-text-primary);vertical-align:top">Counseling: use calming strategy, re-engage</td><td style="padding:7px 8px;color:var(--color-text-secondary);vertical-align:top">Scheduled movement break mid-lesson; teacher prompt script ("Pause, plan, proceed") embedded in lesson plan</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

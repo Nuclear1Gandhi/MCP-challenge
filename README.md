@@ -18,11 +18,9 @@ Given a lesson and a student's IEP, the system should produce **specific, action
 
 ## What's in This Repo
 
-lesson/           # Sample lesson from a real K-8 curriculum
+Original PDFs at repo root (`lesson.pdf`, `iep`). Extracted, chunked Markdown and manifests live under [`data/lesson/`](data/lesson/) and [`data/iep/`](data/iep/) after running `npm run extract-data`.
 
-iep/              # Sample IEP document (anonymized)
-
-README.md
+Source for the MCP server: [`src/server.ts`](src/server.ts) plus [`src/document-store.ts`](src/document-store.ts).
 
 ## What You'll Build
 
@@ -56,6 +54,119 @@ This is intentionally open-ended. There's no single "right" architecture. We wan
 git clone https://github.com/igoldstein19/waypoint-challenge.git
 cd waypoint-challenge
 ```
+
+---
+
+## MCP server implementation (this submission)
+
+### Prerequisites
+
+- Node.js 18+
+- Claude Desktop, Cursor, or another MCP host that can launch a local stdio server
+
+### Install and run
+
+```bash
+npm install
+npm run build
+npm start
+```
+
+Development (no build step): `npm run dev`
+
+The server speaks MCP over **stdio**. Log only to **stderr** if you fork the code; stdout/stdin carry protocol traffic.
+
+Optional environment variable:
+
+- `DATA_DIR` — absolute path to a folder with the same layout as [`data/`](data/) (defaults to `./data` from the process working directory).
+
+### Normalizing PDFs to `data/`
+
+Sample inputs ship as PDFs at the repo root (`lesson.pdf`, `iep`). A dev-only script extracts text and writes chunked Markdown plus manifests:
+
+```bash
+npm run extract-data
+```
+
+The running MCP server reads **committed extracted files** only — not PDFs — so tests stay deterministic and deployment stays simple.
+
+### Claude Desktop (example)
+
+Point `command` at the built entry and set `cwd` to this repository:
+
+```json
+{
+  "mcpServers": {
+    "waypoint-differentiation": {
+      "command": "node",
+      "args": ["dist/server.js"],
+      "cwd": "C:\\projects\\waypoint-challenge"
+    }
+  }
+}
+```
+
+Adjust `cwd` / use absolute paths on your machine. After restarting Claude Desktop, enable the server and ask the model to list resources or call tools such as `list_iep_sections`.
+
+### Architecture decisions
+
+| Piece | Role |
+| --- | --- |
+| **`data/lesson`, `data/iep`** | Normalized Markdown + `*.manifest.json` listing `{ id, title }` per chunk; `sections/*.md` holds one file per id. Chunking uses PDF heading heuristics so sections align with visible structure rather than arbitrary token splits. |
+| **Resources** | Stable URIs for discovery: `lesson://document`, `iep://document`, `context://udl-primer`, plus URI templates `lesson://section/{sectionId}` and `iep://section/{sectionId}` with list + completion support. Full documents satisfy “what exists?”; templates enumerate slice URIs for selective reads. |
+| **Tools** | `list_*`, `get_*`, `search_*` let the host pull **exact excerpts** without pasting entire PDFs into chat — encouraging grounding in both lesson and IEP. |
+| **Prompt `differentiate_for_iep_student`** | Bundles the canonical output scaffold (lesson anchor → accommodations checklist) and explicit grounding rules in [`src/differentiation.ts`](src/differentiation.ts). |
+| **`context://udl-primer`** | Short UDL-oriented reminders authored for this repo (not copied from proprietary curriculum). |
+
+**Trade-offs:** Full-text resources are easy to audit; tools add a second path so models fetch smaller slices and cite section ids. This challenge stays MCP-only (no upload API); a production system would ingest arbitrary lessons/IEPs through district pipelines before exposing similar URIs.
+
+### Prompt and output shape
+
+The registered prompt and `DIFFERENTIATION_PROMPT_BODY` enforce a strict Markdown-only contract:
+
+- Output Markdown only (no HTML).
+- Output exactly these six top-level headings, in order (and nothing else):
+  - `## Lesson anchor`
+  - `## Student-linked needs (with IEP citations)`
+  - `## Scaffolds`
+  - `## Materials and procedures`
+  - `## Assessment`
+  - `## Accommodation checklist`
+- Under each heading, use bullet points.
+- Each bullet includes at least one citation to lesson/IEP text using:
+  - `(Lesson <sectionId> “<sectionTitle>”)`
+  - `(IEP <sectionId> “<sectionTitle>”)`
+  Or ends with `(UDL)` if it is general best practice not explicitly stated in the IEP.
+
+### Tests
+
+```bash
+npm test
+```
+
+Unit tests cover manifest loading, section reads, and search helpers against the committed `data/` fixtures.
+
+### Example outputs (illustrative)
+
+The host model should fill these using **your** `lesson` / `IEP` excerpts; the samples below show form only.
+
+**Example A — exit ticket (abbreviated)**
+
+1. **Lesson anchor** — Grade 4 fractions exit ticket (denominators 2–12).  
+2. **Student-linked needs** — *Processing speed / working memory* (cite the **Academics** / present-level statements from the IEP resources); *Attention* (cite the **Accommodations** or services section as listed in the IEP).  
+3. **Scaffolds** — Provide a completed worked example matching the exit ticket format; offer sentence frames (“The fraction greater than ½ is ___ because ___”).  
+4. **Materials and procedures** — Cut exit ticket to **two** items; allow oral justification recorded by peer or teacher; keep manipulatives available from the lesson launch.  
+5. **Assessment** — Accept a labeled constructed response or drawn representation instead of full sentences if objectives are met.  
+6. **Accommodation checklist** — Preferential seating near model; quiet corner option; extended time where the IEP specifies; directions repeated once in shortened form.
+
+**Example B — vocabulary launch**
+
+1. **Lesson anchor** — Academic vocabulary introduction for the unit launch.  
+2. **Student-linked needs** — *Language* goals (cite the student’s **Academics** or communication goals in the IEP); *Sensory* or *environment* supports (cite the listed accommodations that apply to small-group noise).  
+3. **Scaffolds** — Pre-teach three high-utility roots using a visual grid; choral repetition before partner talk.  
+4. **Materials and procedures** — Provide vocabulary cards with image + student-friendly definition prior to whole-class reading; pair student with “word coach” peer for three minutes.  
+5. **Assessment** — Sort terms into “know / sort-of / new” instead of a timed written quiz.  
+6. **Accommodation checklist** — Advance organizer printed; noise-reducing headphones optional during independent sort.
 
 ## Evaluation Criteria
 
